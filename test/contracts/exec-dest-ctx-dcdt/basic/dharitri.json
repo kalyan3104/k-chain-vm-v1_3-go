@@ -1,0 +1,8 @@
+{
+    "language": "clang",
+    "source_files": [
+        "basic.c",
+				"../../drtvm/args.c",
+				"../../drtvm/cbuiltins.c"
+    ]
+}

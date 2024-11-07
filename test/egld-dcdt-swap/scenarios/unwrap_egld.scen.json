@@ -1,0 +1,67 @@
+{
+    "name": "unwrap rewa",
+    "steps": [
+        {
+            "step": "externalSteps",
+            "path": "wrap_rewa.scen.json"
+        },
+        {
+            "step": "scCall",
+            "txId": "unwrap-rewa",
+            "tx": {
+                "from": "address:user",
+                "to": "sc:rewa-dcdt-swap",
+                "value": "0",
+                "dcdt": {
+                    "tokenIdentifier": "str:WREWA-abcdef",
+                    "value": "300"
+                },
+                "function": "unwrapRewa",
+                "arguments": [],
+                "gasLimit": "100,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "status": "0",
+                "message": "",
+                "logs": [
+                    {
+                        "address": "sc:rewa-dcdt-swap",
+                        "identifier": "str:unwrap-rewa",
+                        "topics": [
+                            "address:user"
+                        ],
+                        "data": "300"
+                    }
+                ],
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:user": {
+                    "nonce": "2",
+                    "balance": "800",
+                    "dcdt": {
+                        "str:WREWA-abcdef": "200"
+                    },
+                    "storage": {}
+                },
+                "sc:rewa-dcdt-swap": {
+                    "nonce": "0",
+                    "balance": "200",
+                    "dcdt": {
+                        "str:WREWA-abcdef": "1800"
+                    },
+                    "storage": {
+                        "str:wrapped_rewa_token_id": "str:WREWA-abcdef",
+                        "str:unused_wrapped_rewa": "1800"
+                    },
+                    "code": "file:../output/rewa-dcdt-swap.wasm"
+                }
+            }
+        }
+    ]
+}

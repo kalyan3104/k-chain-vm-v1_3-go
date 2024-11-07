@@ -1,0 +1,206 @@
+{
+    "name": "load local dcdt roles",
+    "gasSchedule": "dummy",
+    "steps": [
+        {
+            "step": "setState",
+            "accounts": {
+                "sc:basic-features": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "dcdt": {
+                        "str:DCDT-123456": "200"
+                    },
+                    "storage": {},
+                    "code": "file:../output/basic-features.wasm"
+                },
+                "address:viewer": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {},
+                    "code": ""
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "comment": "no roles",
+            "txId": "0",
+            "tx": {
+                "from": "address:viewer",
+                "to": "sc:basic-features",
+                "value": "0",
+                "function": "get_dcdt_local_roles",
+                "arguments": [
+                    "str:DCDT-123456"
+                ],
+                "gasLimit": "50,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "setState",
+            "accounts": {
+                "sc:basic-features": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "dcdt": {
+                        "str:DCDT-123456": {
+                            "balance": "200",
+                            "roles": [
+                                "DCDTRoleLocalMint"
+                            ]
+                        }
+                    },
+                    "storage": {},
+                    "code": "file:../output/basic-features.wasm"
+                },
+                "address:viewer": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {},
+                    "code": ""
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "comment": "one role",
+            "txId": "1",
+            "tx": {
+                "from": "address:viewer",
+                "to": "sc:basic-features",
+                "value": "0",
+                "function": "get_dcdt_local_roles",
+                "arguments": [
+                    "str:DCDT-123456"
+                ],
+                "gasLimit": "50,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [
+                    "str:DCDTRoleLocalMint"
+                ],
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "setState",
+            "accounts": {
+                "sc:basic-features": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "dcdt": {
+                        "str:DCDT-123456": {
+                            "balance": "200",
+                            "roles": [
+                                "DCDTRoleLocalMint",
+                                "DCDTRoleLocalBurn"
+                            ]
+                        }
+                    },
+                    "storage": {},
+                    "code": "file:../output/basic-features.wasm"
+                },
+                "address:viewer": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {},
+                    "code": ""
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "comment": "multiple roles",
+            "txId": "2",
+            "tx": {
+                "from": "address:viewer",
+                "to": "sc:basic-features",
+                "value": "0",
+                "function": "get_dcdt_local_roles",
+                "arguments": [
+                    "str:DCDT-123456"
+                ],
+                "gasLimit": "50,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [
+                    "str:DCDTRoleLocalMint",
+                    "str:DCDTRoleLocalBurn"
+                ],
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "setState",
+            "accounts": {
+                "sc:basic-features": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "dcdt": {
+                        "str:DCDT-123456": {
+                            "balance": "200",
+                            "lastNonce": "5",
+                            "roles": [
+                                "DCDTRoleNFTCreate",
+                                "DCDTRoleNFTAddQuantity",
+                                "DCDTRoleNFTBurn"
+                            ]
+                        }
+                    },
+                    "storage": {},
+                    "code": "file:../output/basic-features.wasm"
+                },
+                "address:viewer": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {},
+                    "code": ""
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "comment": "nft roles",
+            "txId": "3",
+            "tx": {
+                "from": "address:viewer",
+                "to": "sc:basic-features",
+                "value": "0",
+                "function": "get_dcdt_local_roles",
+                "arguments": [
+                    "str:DCDT-123456"
+                ],
+                "gasLimit": "50,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [
+                    "str:DCDTRoleNFTCreate",
+                    "str:DCDTRoleNFTAddQuantity",
+                    "str:DCDTRoleNFTBurn"
+                ],
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        }
+    ]
+}

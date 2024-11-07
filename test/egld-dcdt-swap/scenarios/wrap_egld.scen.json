@@ -1,0 +1,71 @@
+{
+    "name": "wrap rewa",
+    "steps": [
+        {
+            "step": "setState",
+            "accounts": {
+                "address:user": {
+                    "nonce": "0",
+                    "balance": "1000",
+                    "storage": {}
+                },
+                "sc:rewa-dcdt-swap": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "dcdt": {
+                        "str:WREWA-abcdef": "2000"
+                    },
+                    "storage": {
+                        "str:wrapped_rewa_token_id": "str:WREWA-abcdef",
+                        "str:unused_wrapped_rewa": "2000"
+                    },
+                    "code": "file:../output/rewa-dcdt-swap.wasm"
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "txId": "wrap-rewa",
+            "tx": {
+                "from": "address:user",
+                "to": "sc:rewa-dcdt-swap",
+                "value": "500",
+                "function": "wrapRewa",
+                "arguments": [],
+                "gasLimit": "100,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:user": {
+                    "nonce": "1",
+                    "balance": "500",
+                    "dcdt": {
+                        "str:WREWA-abcdef": "500"
+                    },
+                    "storage": {}
+                },
+                "sc:rewa-dcdt-swap": {
+                    "nonce": "0",
+                    "balance": "500",
+                    "dcdt": {
+                        "str:WREWA-abcdef": "1500"
+                    },
+                    "storage": {
+                        "str:wrapped_rewa_token_id": "str:WREWA-abcdef",
+                        "str:unused_wrapped_rewa": "1500"
+                    },
+                    "code": "file:../output/rewa-dcdt-swap.wasm"
+                }
+            }
+        }
+    ]
+}
